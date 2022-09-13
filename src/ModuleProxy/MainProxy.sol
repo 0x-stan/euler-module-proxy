@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import {CreateProxyHelper} from "./lib/CreateProxyHelper.sol";
 
-contract Proxy is CreateProxyHelper {
+contract MainProxy is CreateProxyHelper {
     constructor(address installerModule) {
         moduleLookup[MODULEID__INSTALLER] = installerModule;
         address installerProxy = _createProxy(MODULEID__INSTALLER);

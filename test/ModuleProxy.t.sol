@@ -3,14 +3,14 @@ pragma solidity ^0.8.13;
 
 import "./utils/TestHelper.sol";
 import {Storage} from "../src/ModuleProxy/Storage.sol";
-import {Proxy} from "../src/ModuleProxy/Proxy.sol";
+import {MainProxy} from "../src/ModuleProxy/MainProxy.sol";
 import {ModuleProxy} from "../src/ModuleProxy/ModuleProxy.sol";
 import {InstallerModule} from "../src/ModuleProxy/modules/InstallerModule.sol";
 import {AddModule} from "../src/ModuleProxy/modules/AddModule.sol";
 import {MultiplyModule} from "../src/ModuleProxy/modules/MultiplyModule.sol";
 
 contract ModuleProxyTest is TestHelper, Storage {
-    Proxy proxy;
+    MainProxy mainProxy;
     address installerProxy;
     InstallerModule installerModule;
     AddModule addModule;
@@ -21,8 +21,8 @@ contract ModuleProxyTest is TestHelper, Storage {
 
     function setUp() public {
         installerModule = new InstallerModule(MODULEID__INSTALLER, INIT_VERSION);
-        proxy = new Proxy(address(installerModule));
-        installerProxy = proxy.moduleIdToProxy(MODULEID__INSTALLER);
+        mainProxy = new MainProxy(address(installerModule));
+        installerProxy = mainProxy.moduleIdToProxy(MODULEID__INSTALLER);
 
         addModule = new AddModule(MODULEID__ADD, INIT_VERSION);
         multiplyModule = new MultiplyModule(MODULEID__MULTIPLY, INIT_VERSION);
@@ -41,15 +41,15 @@ contract ModuleProxyTest is TestHelper, Storage {
         (bool success, ) = installModules();
         assertTrue(success);
 
-        assertTrue(proxy.moduleIdToImplementation(MODULEID__ADD) == address(addModule));
-        assertTrue(proxy.moduleIdToImplementation(MODULEID__MULTIPLY) == address(multiplyModule));
+        assertTrue(mainProxy.moduleIdToImplementation(MODULEID__ADD) == address(addModule));
+        assertTrue(mainProxy.moduleIdToImplementation(MODULEID__MULTIPLY) == address(multiplyModule));
     }
 
     function test_callMoudle() public {
         installModules();
 
-        address addModuleProxy = proxy.moduleIdToProxy(MODULEID__ADD);
-        address multiplyModuleProxy = proxy.moduleIdToProxy(MODULEID__MULTIPLY);
+        address addModuleProxy = mainProxy.moduleIdToProxy(MODULEID__ADD);
+        address multiplyModuleProxy = mainProxy.moduleIdToProxy(MODULEID__MULTIPLY);
 
         
         bool success;
@@ -79,8 +79,8 @@ contract ModuleProxyTest is TestHelper, Storage {
     function test_upgradeModule() public {
         installModules();
 
-        address addModuleProxy = proxy.moduleIdToProxy(MODULEID__ADD);
-        address multiplyModuleProxy = proxy.moduleIdToProxy(MODULEID__MULTIPLY);
+        address addModuleProxy = mainProxy.moduleIdToProxy(MODULEID__ADD);
+        address multiplyModuleProxy = mainProxy.moduleIdToProxy(MODULEID__MULTIPLY);
 
         // deploy new module, version 200
         addModule = new AddModule(MODULEID__ADD, 200);
