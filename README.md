@@ -32,7 +32,7 @@ Single Proxy and Implementation contract.
 ## Module Proxy
 
 ```bash
-Proxy
+MainProxy
 ├── InstallerModule
 │   ├── InstallerModuleProxy
 │   └── InstallerModuleImplementation
@@ -44,18 +44,18 @@ Proxy
     └── MultiplyModuleImplementation
 ```
 
-Proxy is the main entry, every module has one ModuleProxy and one ModuleImplementation.
+MainProxy is the main entry, every module has a ModuleProxy contract and a ModuleImplementation contract.
 
 ### deploy process
 
 1. deploy InstallerModuleImplementation
-2. deploy Proxy with InstallerModuleImplementation address
+2. deploy MainProxy with InstallerModuleImplementation address
 3. deploy AddModuleImplementation and MultiplyModuleImplementation
 4. call InstallerModuleProxy installModules function to install add and multiply modules. It will deploy a ModuleProxy for every module, and mapping ModuleImplementation to ModuleProxy
 
 When call function on ModuleProxy, ModuleProxy will call main Proxy's dispatch function, and dispatch will delegatecall ModuleImplementation's logic function.
 
-Notice: main Proxy use call assembly code, and ModuleProxy use delegatecall assembly code.
+Notice: MainProxy use call assembly code, and ModuleProxy use delegatecall assembly code.
 
 ```solidity
 // src/ModuleProxy/Proxy.sol
@@ -86,3 +86,7 @@ fallback() external {
 }
 
 ```
+
+## Flow
+
+![Euler-Module-Proxy-Flow](./img/Euler-Module-Proxy%402x.png)
