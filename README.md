@@ -10,16 +10,18 @@ Single Proxy and Implementation contract.
 
 ## Module Proxy
 
-Proxy  
-├── InstallerModule  
-│   ├── InstallerModuleProxy  
-│   └── InstallerModuleImplementation  
-├── AddModule  
-│   ├── AddModuleProxy  
-│   └── AddModuleImplementation  
-└── MultiplyModule  
-    ├── MultiplyModuleProxy  
-    └── MultiplyModuleImplementation  
+```bash
+Proxy
+├── InstallerModule
+│   ├── InstallerModuleProxy
+│   └── InstallerModuleImplementation
+├── AddModule
+│   ├── AddModuleProxy
+│   └── AddModuleImplementation
+└── MultiplyModule
+    ├── MultiplyModuleProxy
+    └── MultiplyModuleImplementation
+```
 
 Proxy is the main entry, every module has one ModuleProxy and one ModuleImplementation.
 
