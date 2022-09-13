@@ -2,6 +2,27 @@
 
 A simply exmaple to learn Euler's upgradable module proxy.
 
+## Quick Start
+
+install
+
+```bash
+forge install
+```
+
+test
+
+```bash
+forge test
+```
+
+run script
+
+```bash
+# deploy contracts
+forge script script/DeployModuleProxyScript.s.sol
+```
+
 ## Simple Proxy
 
 Proxy -> Implementation
@@ -65,4 +86,3 @@ fallback() external {
 }
 
 ```
-
