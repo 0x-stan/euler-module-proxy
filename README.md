@@ -152,6 +152,6 @@ dispatch selector + calldata + caller address
 
 ## Flow
 
-![Flow Board](https://whimsical.com/euler-module-proxy-BhhPNejt2rbLgx1jntXAsh)
+[Flow Board link](https://whimsical.com/euler-module-proxy-BhhPNejt2rbLgx1jntXAsh)
 
 ![Euler-Module-Proxy-Flow](./img/Euler-Module-Proxy%402x.png)
