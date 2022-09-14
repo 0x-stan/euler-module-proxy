@@ -27,7 +27,7 @@ contract MainProxy is CreateProxyHelper {
 
         uint256 msgDataLength = msg.data.length;
         // 4: dispatch selector
-        // 4: delegatecall selector
+        // 4: some function selector
         // 20: caller address
         require(msgDataLength >= (4 + 4 + 20), "Proxy:input-too-short");
 
@@ -37,6 +37,7 @@ contract MainProxy is CreateProxyHelper {
             mstore(payloadSize, shl(96, caller())) // add caller address to tail
             
             // insize = payloadSize + 20(calleraddress)
+            // NOTICE: delegatecall
             let result := delegatecall(gas(), moduleImpl, 0, add(payloadSize, 20), 0, 0)
 
             returndatacopy(0, 0, returndatasize())

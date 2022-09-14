@@ -44,14 +44,14 @@ MainProxy
     └── MultiplyModuleImplementation
 ```
 
-MainProxy is the main entry, every module has a ModuleProxy contract and a ModuleImplementation contract.
+MainProxy is the main entry, each module has a ModuleProxy contract and a ModuleImplementation contract.
 
 ### deploy process
 
 1. deploy InstallerModuleImplementation
 2. deploy MainProxy with InstallerModuleImplementation address
 3. deploy AddModuleImplementation and MultiplyModuleImplementation
-4. call InstallerModuleProxy installModules function to install add and multiply modules. It will deploy a ModuleProxy for every module, and mapping ModuleImplementation to ModuleProxy
+4. call InstallerModuleProxy installModules function to install add and multiply modules. It will deploy a ModuleProxy for each module, and mapping ModuleImplementation to ModuleProxy
 
 When call function on ModuleProxy, ModuleProxy will call main Proxy's dispatch function, and dispatch will delegatecall ModuleImplementation's logic function.
 
