@@ -102,4 +102,32 @@ contract ModuleProxyTest is TestHelper, Storage {
         assertTrue(uint256(bytes32(data)) == 200);
     }
 
+    function test_unpackTrailingParams() public {
+        installModules();
+
+        address addModuleProxy = mainProxy.moduleIdToProxy(MODULEID__ADD);
+
+        vm.startPrank(alice);
+        bool success;
+        bytes memory data;
+
+        (success, data) = address(addModuleProxy).call(
+            abi.encodeWithSignature("unpackTrailingParams()")
+        );
+        console2.logBytes(data);
+
+        assertTrue(data.length == 64);
+
+        bytes memory aliceAddrBytes = new bytes(32);
+        bytes memory addModuleProxyAddrBytes = new bytes(32);
+
+        for (uint256 i = 0; i <32; i++) {
+            aliceAddrBytes[i] = data[i];
+            addModuleProxyAddrBytes[i] = data[i+32];
+        }
+
+        assertTrue(uint256(bytes32(aliceAddrBytes)) == uint256(uint160(alice)));
+        assertTrue(uint256(bytes32(addModuleProxyAddrBytes)) == uint256(uint160(addModuleProxy)));
+    }
+
 }

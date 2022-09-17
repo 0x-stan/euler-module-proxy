@@ -11,5 +11,12 @@ contract BaseModule is Storage {
         moduleId = moduleId_;
         moduleVersion = version_;
     }
+
+    function unpackTrailingParams() public pure returns (address msgSender, address proxyAddr) {
+        assembly {
+            msgSender := shr(96, calldataload(sub(calldatasize(), 40)))
+            proxyAddr := shr(96, calldataload(sub(calldatasize(), 20)))
+        }
+    }
     
 }
